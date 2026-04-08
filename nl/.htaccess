@@ -1,0 +1,5 @@
+RewriteEngine On
+
+RewriteRule ^international-headhunting\.html$ /international.html [R=301,L]
+RewriteRule ^sectors/sectors\.html$ /sectors.html [R=301,L]
+RewriteRule ^privacy_policy\.html$ /privacy.html [R=301,L]

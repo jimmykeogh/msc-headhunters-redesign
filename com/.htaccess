@@ -1,0 +1,36 @@
+RewriteEngine On
+
+# Core page redirects
+RewriteRule ^headhunting-services/?$ /services.html [R=301,L]
+RewriteRule ^about-msc-headhunters/?$ /about.html [R=301,L]
+RewriteRule ^international-headhunting/?$ /international.html [R=301,L]
+RewriteRule ^client-testimonials/?$ /testimonials.html [R=301,L]
+RewriteRule ^frequently-asked-questions/?$ /faq.html [R=301,L]
+RewriteRule ^global-clients/?$ /clients.html [R=301,L]
+RewriteRule ^privacy-policy-gdpr/?$ /privacy.html [R=301,L]
+RewriteRule ^questions-you-should-ask-headhunters/?$ /questions-to-ask.html [R=301,L]
+RewriteRule ^why-avoid-contingency-headhunting/?$ /why-avoid-contingency.html [R=301,L]
+RewriteRule ^hiring-and-building-a-great-team/?$ /hiring-a-great-team.html [R=301,L]
+RewriteRule ^industries-and-sectors/?$ /sectors.html [R=301,L]
+RewriteRule ^contact-msc-headhunting/?$ /contact.html [R=301,L]
+RewriteRule ^headhunting-guarantees/?$ /why-choose-us.html [R=301,L]
+RewriteRule ^how-to-react-when-a-headhunter-calls-you/?$ /blog.html [R=301,L]
+RewriteRule ^why-true-headhunters-dont-have-a-database-of-candidates/?$ /blog.html [R=301,L]
+
+# Sector sub-pages -> sectors.html
+RewriteRule ^industries-and-sectors/.+$ /sectors.html [R=301,L]
+
+# Case study sub-pages -> case-studies.html
+RewriteRule ^case-studies/.+$ /case-studies.html [R=301,L]
+
+# Country pages -> international.html
+RewriteRule ^(china|bahrain|russia|saudi|netherlands|oman|kuwait|qatar|usa|germany|uae)/?$ /international.html [R=301,L]
+
+# Testimonial sub-pages -> testimonials.html
+RewriteRule ^testimonials/.+$ /testimonials.html [R=301,L]
+
+# Blog posts catch-all -> blog.html
+RewriteRule ^blog/.+$ /blog.html [R=301,L]
+RewriteRule ^category/.+$ /blog.html [R=301,L]
+RewriteRule ^tag/.+$ /blog.html [R=301,L]
+RewriteRule ^author/.+$ /about.html [R=301,L]
