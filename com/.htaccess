@@ -11,25 +11,75 @@ RewriteRule ^privacy-policy-gdpr/?$ /privacy.html [R=301,L]
 RewriteRule ^questions-you-should-ask-headhunters/?$ /questions-to-ask.html [R=301,L]
 RewriteRule ^why-avoid-contingency-headhunting/?$ /why-avoid-contingency.html [R=301,L]
 RewriteRule ^hiring-and-building-a-great-team/?$ /hiring-a-great-team.html [R=301,L]
-RewriteRule ^industries-and-sectors/?$ /sectors.html [R=301,L]
 RewriteRule ^contact-msc-headhunting/?$ /contact.html [R=301,L]
-RewriteRule ^headhunting-guarantees/?$ /why-choose-us.html [R=301,L]
-RewriteRule ^how-to-react-when-a-headhunter-calls-you/?$ /blog.html [R=301,L]
-RewriteRule ^why-true-headhunters-dont-have-a-database-of-candidates/?$ /blog.html [R=301,L]
+RewriteRule ^headhunting-guarantees/?$ /headhunting-guarantees.html [R=301,L]
+RewriteRule ^how-to-react-when-a-headhunter-calls-you/?$ /how-to-react-when-a-headhunter-calls-you.html [R=301,L]
+RewriteRule ^why-true-headhunters-dont-have-a-database-of-candidates/?$ /why-true-headhunters-dont-have-a-database-of-candidates.html [R=301,L]
+RewriteRule ^thank-you/?$ /thank-you.html [R=301,L]
 
-# Sector sub-pages -> sectors.html
-RewriteRule ^industries-and-sectors/.+$ /sectors.html [R=301,L]
+# Individual sector page redirects
+RewriteRule ^industries-and-sectors/maritime-headhunters/?$ /maritime-headhunters.html [R=301,L]
+RewriteRule ^industries-and-sectors/oil-and-gas-headhunters/?$ /oil-and-gas-headhunters.html [R=301,L]
+RewriteRule ^industries-and-sectors/energy-and-renewable-headhunters/?$ /energy-and-renewable-headhunters.html [R=301,L]
+RewriteRule ^industries-and-sectors/automotive-executive-search/?$ /automotive-executive-search.html [R=301,L]
+RewriteRule ^industries-and-sectors/technology-headhunters/?$ /technology-headhunters.html [R=301,L]
+RewriteRule ^industries-and-sectors/manufacturing-headhunters/?$ /manufacturing-headhunters.html [R=301,L]
+RewriteRule ^industries-and-sectors/finance-headhunters/?$ /finance-headhunters.html [R=301,L]
+RewriteRule ^industries-and-sectors/healthcare-headhunters/?$ /healthcare-headhunters.html [R=301,L]
+RewriteRule ^industries-and-sectors/headhunting-for-ecommerce/?$ /headhunting-for-ecommerce.html [R=301,L]
+RewriteRule ^industries-and-sectors/legal-headhunters/?$ /legal-headhunters.html [R=301,L]
+RewriteRule ^industries-and-sectors/marketing-headhunters/?$ /marketing-headhunters.html [R=301,L]
+RewriteRule ^industries-and-sectors/retail-headhunters/?$ /retail-headhunters.html [R=301,L]
+RewriteRule ^industries-and-sectors/media-headhunters/?$ /media-headhunters.html [R=301,L]
+RewriteRule ^industries-and-sectors/?$ /sectors.html [R=301,L]
 
-# Case study sub-pages -> case-studies.html
-RewriteRule ^case-studies/.+$ /case-studies.html [R=301,L]
+# Individual country page redirects
+RewriteRule ^germany/?$ /germany.html [R=301,L]
+RewriteRule ^netherlands/?$ /netherlands.html [R=301,L]
+RewriteRule ^usa/?$ /usa.html [R=301,L]
+RewriteRule ^china/?$ /china.html [R=301,L]
+RewriteRule ^uae/?$ /uae.html [R=301,L]
+RewriteRule ^saudi/?$ /saudi.html [R=301,L]
+RewriteRule ^bahrain/?$ /bahrain.html [R=301,L]
+RewriteRule ^russia/?$ /russia.html [R=301,L]
+RewriteRule ^oman/?$ /oman.html [R=301,L]
+RewriteRule ^kuwait/?$ /kuwait.html [R=301,L]
+RewriteRule ^qatar/?$ /qatar.html [R=301,L]
 
-# Country pages -> international.html
-RewriteRule ^(china|bahrain|russia|saudi|netherlands|oman|kuwait|qatar|usa|germany|uae)/?$ /international.html [R=301,L]
+# Individual blog post redirects (recent 25 posts)
+RewriteRule ^the-next-5-most-important-questions-you-should-ask-a-prospective-headhunter-part-two/?$ /the-next-5-most-important-questions-you-should-ask-a-prospective-headhunter-part-two.html [R=301,L]
+RewriteRule ^5-reasons-why-you-should-use-a-headhunter/?$ /5-reasons-why-you-should-use-a-headhunter.html [R=301,L]
+RewriteRule ^how-energy-and-renewable-headhunters-can-help-you-find-the-best-hybrid-leaders/?$ /how-energy-and-renewable-headhunters-can-help-you-find-the-best-hybrid-leaders.html [R=301,L]
+RewriteRule ^how-international-headhunters-can-help-open-up-new-markets/?$ /how-international-headhunters-can-help-open-up-new-markets.html [R=301,L]
+RewriteRule ^how-to-act-when-a-recruiter-calls/?$ /how-to-act-when-a-recruiter-calls.html [R=301,L]
+RewriteRule ^the-case-for-utilising-international-headhunters/?$ /the-case-for-utilising-international-headhunters.html [R=301,L]
+RewriteRule ^how-german-headhunters-can-help-transform-your-workforce/?$ /how-german-headhunters-can-help-transform-your-workforce.html [R=301,L]
+RewriteRule ^a-new-approach-to-recruitment-with-the-help-of-headhunters-in-germany/?$ /a-new-approach-to-recruitment-with-the-help-of-headhunters-in-germany.html [R=301,L]
+RewriteRule ^headhunting-top-10-tips/?$ /headhunting-top-10-tips.html [R=301,L]
+RewriteRule ^the-benefits-of-working-with-maritime-headhunters/?$ /the-benefits-of-working-with-maritime-headhunters.html [R=301,L]
+RewriteRule ^graduate-tips/?$ /graduate-tips.html [R=301,L]
+RewriteRule ^benefits-manufacturing-headhunters/?$ /benefits-manufacturing-headhunters.html [R=301,L]
+RewriteRule ^the-first-interview/?$ /the-first-interview.html [R=301,L]
+RewriteRule ^company-culture/?$ /company-culture.html [R=301,L]
+RewriteRule ^assembling-your-dream-team-with-expert-help-from-executive-headhunters/?$ /assembling-your-dream-team-with-expert-help-from-executive-headhunters.html [R=301,L]
+RewriteRule ^what-to-do-when-headhunters-call/?$ /what-to-do-when-headhunters-call.html [R=301,L]
+RewriteRule ^the-top-5-questions-you-should-ask-a-prospective-headhunter/?$ /the-top-5-questions-you-should-ask-a-prospective-headhunter.html [R=301,L]
+RewriteRule ^mentoring-to-retain-top-talent/?$ /mentoring-to-retain-top-talent.html [R=301,L]
+RewriteRule ^true-headhunters-would-never-advertise-their-jobs-or-use-a-database/?$ /true-headhunters-would-never-advertise-their-jobs-or-use-a-database.html [R=301,L]
+RewriteRule ^think-your-mba-is-your-ticket-to-freedom-think-again/?$ /think-your-mba-is-your-ticket-to-freedom-think-again.html [R=301,L]
+RewriteRule ^how-european-headhunters-find-top-talent-strategies-and-techniques/?$ /how-european-headhunters-find-top-talent-strategies-and-techniques.html [R=301,L]
+RewriteRule ^find-your-next-employee-of-the-year-with-help-from-german-headhunters/?$ /find-your-next-employee-of-the-year-with-help-from-german-headhunters.html [R=301,L]
+RewriteRule ^why-quiet-quitting-is-a-problem-and-how-media-headhunters-can-help/?$ /why-quiet-quitting-is-a-problem-and-how-media-headhunters-can-help.html [R=301,L]
+RewriteRule ^key-leadership-skills-maritime-headhunters-look-for-in-a-candidate/?$ /key-leadership-skills-maritime-headhunters-look-for-in-a-candidate.html [R=301,L]
+RewriteRule ^why-is-headhunting-recruitment-so-difficult/?$ /why-is-headhunting-recruitment-so-difficult.html [R=301,L]
 
-# Testimonial sub-pages -> testimonials.html
-RewriteRule ^testimonials/.+$ /testimonials.html [R=301,L]
+# Case study sub-pages -> individual case study pages
+RewriteRule ^case-studies/(.+?)/?$ /case-studies/$1.html [R=301,L]
 
-# Blog posts catch-all -> blog.html
+# Testimonial sub-pages -> individual testimonial pages
+RewriteRule ^testimonials/(.+?)/?$ /testimonials/$1.html [R=301,L]
+
+# Catch-all for remaining old blog posts (older posts not individually recreated)
 RewriteRule ^blog/.+$ /blog.html [R=301,L]
 RewriteRule ^category/.+$ /blog.html [R=301,L]
 RewriteRule ^tag/.+$ /blog.html [R=301,L]
