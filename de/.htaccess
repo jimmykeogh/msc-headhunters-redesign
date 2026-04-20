@@ -1,5 +1,6 @@
 RewriteEngine On
 
+# Core page redirects
 RewriteRule ^headhunting-dienstleistungen/?$ /services.html [R=301,L]
 RewriteRule ^ueber-msc-headhunters/?$ /about.html [R=301,L]
 RewriteRule ^internationale-headhunter/?$ /international.html [R=301,L]
@@ -15,6 +16,35 @@ RewriteRule ^kontakt-msc-headhunting/?$ /contact.html [R=301,L]
 RewriteRule ^besondere-garantien/?$ /why-choose-us.html [R=301,L]
 RewriteRule ^msc-retained-dienstleistung/?$ /services.html [R=301,L]
 RewriteRule ^msc-keine-bewerberdatenbank-nutzen/?$ /why-avoid-contingency.html [R=301,L]
+
+# German sector slugs → new sector pages
+RewriteRule ^industrie-sektoren/maritime-headhunter/?$ /maritime-headhunters.html [R=301,L]
+RewriteRule ^industrie-sektoren/oel-gas-headhunter/?$ /oil-and-gas-headhunters.html [R=301,L]
+RewriteRule ^industrie-sektoren/energie-headhunter/?$ /energy-and-renewable-headhunters.html [R=301,L]
+RewriteRule ^industrie-sektoren/automobil-headhunter/?$ /automotive-executive-search.html [R=301,L]
+RewriteRule ^industrie-sektoren/technologie-headhunter/?$ /technology-headhunters.html [R=301,L]
+RewriteRule ^industrie-sektoren/fertigung-headhunter/?$ /manufacturing-headhunters.html [R=301,L]
+RewriteRule ^industrie-sektoren/finanzen-headhunter/?$ /finance-headhunters.html [R=301,L]
+RewriteRule ^industrie-sektoren/gesundheit-headhunter/?$ /healthcare-headhunters.html [R=301,L]
+RewriteRule ^industrie-sektoren/recht-headhunter/?$ /legal-headhunters.html [R=301,L]
+RewriteRule ^industrie-sektoren/marketing-headhunter/?$ /marketing-headhunters.html [R=301,L]
+RewriteRule ^industrie-sektoren/einzelhandel-headhunter/?$ /retail-headhunters.html [R=301,L]
+RewriteRule ^industrie-sektoren/medien-headhunter/?$ /media-headhunters.html [R=301,L]
+
+# Country page redirects (German slugs)
+RewriteRule ^deutschland/?$ /germany.html [R=301,L]
+RewriteRule ^niederlande/?$ /netherlands.html [R=301,L]
+RewriteRule ^usa/?$ /usa.html [R=301,L]
+RewriteRule ^china/?$ /china.html [R=301,L]
+RewriteRule ^vereinigte-arabische-emirate/?$ /uae.html [R=301,L]
+RewriteRule ^saudi-arabien/?$ /saudi.html [R=301,L]
+RewriteRule ^russland/?$ /russia.html [R=301,L]
+RewriteRule ^katar/?$ /qatar.html [R=301,L]
+
+# Catch-all for 675 old German blog posts
 RewriteRule ^blog/.+$ /blog.html [R=301,L]
 RewriteRule ^category/.+$ /blog.html [R=301,L]
+RewriteRule ^kategorie/.+$ /blog.html [R=301,L]
 RewriteRule ^tag/.+$ /blog.html [R=301,L]
+RewriteRule ^author/.+$ /about.html [R=301,L]
+RewriteRule ^autor/.+$ /about.html [R=301,L]
