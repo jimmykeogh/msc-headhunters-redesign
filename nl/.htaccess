@@ -5,7 +5,32 @@ RewriteEngine On
 # Google's index points at these URLs — do not change them.
 # ============================================================
 
-# Canonical enforcement: redirect .html direct hits to pretty URL
+# Canonical enforcement: redirect new-file .html direct hits to the
+# Google-indexed URL. Uses THE_REQUEST so only EXTERNAL requests match —
+# internal rewrites (below) won't trigger these and cause loops.
+RewriteCond %{THE_REQUEST} \s/+international\.html[\s?] [NC]
+RewriteRule ^ /international-headhunting.html [R=301,L]
+RewriteCond %{THE_REQUEST} \s/+sectors\.html[\s?] [NC]
+RewriteRule ^ /sectors/sectors.html [R=301,L]
+RewriteCond %{THE_REQUEST} \s/+privacy\.html[\s?] [NC]
+RewriteRule ^ /privacy_policy.html [R=301,L]
+RewriteCond %{THE_REQUEST} \s/+finance-headhunters\.html[\s?] [NC]
+RewriteRule ^ /sectors/finance.html [R=301,L]
+RewriteCond %{THE_REQUEST} \s/+technology-headhunters\.html[\s?] [NC]
+RewriteRule ^ /sectors/technology.html [R=301,L]
+RewriteCond %{THE_REQUEST} \s/+manufacturing-headhunters\.html[\s?] [NC]
+RewriteRule ^ /sectors/manufacturing.html [R=301,L]
+RewriteCond %{THE_REQUEST} \s/+marketing-headhunters\.html[\s?] [NC]
+RewriteRule ^ /sectors/marketing.html [R=301,L]
+RewriteCond %{THE_REQUEST} \s/+media-headhunters\.html[\s?] [NC]
+RewriteRule ^ /sectors/media.html [R=301,L]
+RewriteCond %{THE_REQUEST} \s/+retail-headhunters\.html[\s?] [NC]
+RewriteRule ^ /sectors/retail.html [R=301,L]
+RewriteCond %{THE_REQUEST} \s/+healthcare-headhunters\.html[\s?] [NC]
+RewriteRule ^ /sectors/medical.html [R=301,L]
+
+# Directory-level redirect: /sectors/ has no index — send to /sectors/sectors.html
+RewriteRule ^sectors/?$ /sectors/sectors.html [R=301,L]
 
 # Pretty URL rewrites (serve new file at original URL)
 RewriteRule ^international\-headhunting\.html$ international.html [L]

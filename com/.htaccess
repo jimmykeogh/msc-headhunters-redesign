@@ -189,6 +189,11 @@ RewriteRule ^ /usa/ [R=301,L]
 RewriteCond %{THE_REQUEST} \s/+uae\.html[\s?] [NC]
 RewriteRule ^ /uae/ [R=301,L]
 
+# Directory-level redirect (prevent bare directory listing / 403)
+# /testimonials/ has no index.html; send to canonical listing page.
+# Note: sub-paths like /testimonials/decal/ are handled by rules below (anchored with $).
+RewriteRule ^testimonials/?$ /client-testimonials/ [R=301,L]
+
 # Pretty URL rewrites (serve new file at original URL)
 RewriteRule ^the\-next\-5\-most\-important\-questions\-you\-should\-ask\-a\-prospective\-headhunter\-part\-two/?$ the-next-5-most-important-questions-you-should-ask-a-prospective-headhunter-part-two.html [L]
 RewriteRule ^how\-energy\-and\-renewable\-headhunters\-can\-help\-you\-find\-the\-best\-hybrid\-leaders/?$ how-energy-and-renewable-headhunters-can-help-you-find-the-best-hybrid-leaders.html [L]
