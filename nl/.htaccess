@@ -1,27 +1,27 @@
 RewriteEngine On
 
-# Existing explicit redirects
-RewriteRule ^international-headhunting\.html$ /international.html [R=301,L]
-RewriteRule ^sectors/sectors\.html$ /sectors.html [R=301,L]
-RewriteRule ^privacy_policy\.html$ /privacy.html [R=301,L]
+# ============================================================
+# URL PRESERVATION: serve new .html files at original URLs
+# Google's index points at these URLs — do not change them.
+# ============================================================
 
-# Core page redirects (common Dutch slugs)
-RewriteRule ^headhunting-diensten/?$ /services.html [R=301,L]
-RewriteRule ^over-msc-headhunters/?$ /about.html [R=301,L]
-RewriteRule ^internationale-headhunters/?$ /international.html [R=301,L]
-RewriteRule ^referenties/?$ /testimonials.html [R=301,L]
-RewriteRule ^klanten-referenties/?$ /testimonials.html [R=301,L]
-RewriteRule ^honoraria/?$ /fee-structure.html [R=301,L]
-RewriteRule ^waarom-msc/?$ /why-choose-us.html [R=301,L]
-RewriteRule ^veelgestelde-vragen/?$ /faq.html [R=301,L]
-RewriteRule ^privacybeleid/?$ /privacy.html [R=301,L]
-RewriteRule ^sectoren/?$ /sectors.html [R=301,L]
-RewriteRule ^contact/?$ /contact.html [R=301,L]
+# Canonical enforcement: redirect .html direct hits to pretty URL
 
-# Blog catch-all for 675 old Dutch blog posts
+# Pretty URL rewrites (serve new file at original URL)
+RewriteRule ^international\-headhunting\.html$ international.html [L]
+RewriteRule ^sectors/manufacturing\.html$ manufacturing-headhunters.html [L]
+RewriteRule ^sectors/technology\.html$ technology-headhunters.html [L]
+RewriteRule ^sectors/marketing\.html$ marketing-headhunters.html [L]
+RewriteRule ^sectors/sectors\.html$ sectors.html [L]
+RewriteRule ^sectors/finance\.html$ finance-headhunters.html [L]
+RewriteRule ^sectors/medical\.html$ healthcare-headhunters.html [L]
+RewriteRule ^privacy_policy\.html$ privacy.html [L]
+RewriteRule ^sectors/retail\.html$ retail-headhunters.html [L]
+RewriteRule ^sectors/media\.html$ media-headhunters.html [L]
+
+# Blog catch-all for NL
+RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^blog/.+$ /blog.html [R=301,L]
-RewriteRule ^category/.+$ /blog.html [R=301,L]
 RewriteRule ^categorie/.+$ /blog.html [R=301,L]
 RewriteRule ^tag/.+$ /blog.html [R=301,L]
-RewriteRule ^author/.+$ /about.html [R=301,L]
 RewriteRule ^auteur/.+$ /about.html [R=301,L]
