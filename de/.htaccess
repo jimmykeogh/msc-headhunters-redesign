@@ -141,17 +141,7 @@ RewriteRule ^katar/?$ qatar.html [L]
 RewriteRule ^oman/?$ oman.html [L]
 RewriteRule ^usa/?$ usa.html [L]
 
-# ============================================================
-# Legacy URL handling — preserve SEO from pre-redesign WP site
-# ============================================================
-
-# Old retained-service page → folded into services
-RewriteRule ^msc\-retained\-dienstleistung/?$ /headhunting-dienstleistungen/ [R=301,L]
-
-# Old testimonials sub-paths → consolidated /unsere-referenzen/ listing
-RewriteRule ^testimonials/.+$ /unsere-referenzen/ [R=301,L]
-
-# Legacy blog URL patterns (WP category/tag/author/blog)
+# Legacy blog catch-all for German old WP URLs
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^blog/.+$ /blog/msc-headhunting-blog/ [R=301,L]
@@ -160,13 +150,3 @@ RewriteRule ^category/.+$ /blog/msc-headhunting-blog/ [R=301,L]
 RewriteRule ^tag/.+$ /blog/msc-headhunting-blog/ [R=301,L]
 RewriteRule ^autor/.+$ /ueber-msc-headhunters/ [R=301,L]
 RewriteRule ^author/.+$ /ueber-msc-headhunters/ [R=301,L]
-
-# Root-slug catch-all: old WP blog posts live at /slug/ (~400 of them).
-# Redirect unknown single-segment URLs to the blog index so Google's
-# indexed URLs 301 instead of 404. Must come LAST — real pages with
-# reverse-rewrite rules above will already have matched.
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_URI} !^/(case-studies|testimonials|industrie-sektoren|images|shared|wp-content|blog)/ [NC]
-RewriteCond %{REQUEST_URI} ^/[a-z0-9-]+/?$ [NC]
-RewriteRule ^ /blog/msc-headhunting-blog/ [R=301,L]
