@@ -1,0 +1,27 @@
+{
+  "rewrites": {
+    "/international-headhunting.html/": "international.html",
+    "/sectors/manufacturing.html/": "manufacturing-headhunters.html",
+    "/sectors/technology.html/": "technology-headhunters.html",
+    "/sectors/marketing.html/": "marketing-headhunters.html",
+    "/sectors/sectors.html/": "sectors.html",
+    "/sectors/finance.html/": "finance-headhunters.html",
+    "/sectors/medical.html/": "healthcare-headhunters.html",
+    "/privacy_policy.html/": "privacy.html",
+    "/sectors/retail.html/": "retail-headhunters.html",
+    "/sectors/media.html/": "media-headhunters.html"
+  },
+  "redirects": {
+    "/international.html": "/international-headhunting.html",
+    "/sectors.html": "/sectors/sectors.html",
+    "/privacy.html": "/privacy_policy.html",
+    "/finance-headhunters.html": "/sectors/finance.html",
+    "/technology-headhunters.html": "/sectors/technology.html",
+    "/manufacturing-headhunters.html": "/sectors/manufacturing.html",
+    "/marketing-headhunters.html": "/sectors/marketing.html",
+    "/media-headhunters.html": "/sectors/media.html",
+    "/retail-headhunters.html": "/sectors/retail.html",
+    "/healthcare-headhunters.html": "/sectors/medical.html",
+    "/sectors/": "/sectors/sectors.html"
+  }
+}

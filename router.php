@@ -73,6 +73,19 @@ function dbg($tag) {
     header('X-Router-Decision: ' . $tag);
 }
 
+function load_rewrites($root, $site) {
+    static $cache = [];
+    if (!isset($cache[$site])) {
+        $f = "$root/$site/rewrites.json";
+        if (is_file($f)) {
+            $cache[$site] = json_decode(file_get_contents($f), true) ?: ['rewrites'=>[], 'redirects'=>[]];
+        } else {
+            $cache[$site] = ['rewrites'=>[], 'redirects'=>[]];
+        }
+    }
+    return $cache[$site];
+}
+
 // -----------------------------------------------------------------------------
 // Special routes
 // -----------------------------------------------------------------------------
@@ -158,6 +171,25 @@ if (preg_match('#^/wp-(content|admin|includes|json)/#', $path)) {
 if ($path === '/feed/' || $path === '/feed') {
     dbg('feed-301');
     redirect(($site === 'de') ? '/blog/msc-headhunting-blog/' : '/blog/');
+}
+
+// -----------------------------------------------------------------------------
+// Explicit .htaccess-derived rewrites / redirects
+// -----------------------------------------------------------------------------
+$norm = '/' . trim($path, '/') . '/';
+$rw = load_rewrites($ROOT, $site);
+if (isset($rw['redirects'][$norm])) {
+    dbg('map-301');
+    redirect($rw['redirects'][$norm]);
+}
+if (isset($rw['rewrites'][$norm])) {
+    $tgt = $rw['rewrites'][$norm];
+    $abs = (substr($tgt, 0, 1) === '/') ? "$ROOT$tgt" : "$ROOT/$site/$tgt";
+    if (is_file($abs)) {
+        dbg('map-rewrite');
+        serve_file($abs);
+        exit;
+    }
 }
 
 // -----------------------------------------------------------------------------
