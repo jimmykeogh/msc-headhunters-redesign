@@ -3,9 +3,19 @@
  * Router for PHP built-in server (Railway preview).
  * Mirrors the .htaccess rewrite/redirect logic used on one.com production.
  *
- * Only invoked when the requested path is NOT a real file on disk
- * (PHP's built-in server serves existing files directly).
+ * Invoked for EVERY request by `php -S ... router.php`. If this script
+ * returns FALSE, PHP serves the on-disk file as-is; otherwise the
+ * script's output is sent.
  */
+
+$ROOT = __DIR__;
+
+// Let PHP serve existing static files directly (CSS, JS, images, fonts, etc.)
+// — only intercept when the request is NOT a real file on disk.
+$uri_path = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
+if ($uri_path !== '/' && $uri_path !== '' && is_file($ROOT . $uri_path)) {
+    return false;
+}
 
 // -----------------------------------------------------------------------------
 // Site selection (host-based; defaults to com on unknown hosts)
@@ -19,15 +29,15 @@ if (strpos($host, 'msc-headhunters.de') !== false || strpos($host, '.de') !== fa
     $site = 'com';
 }
 
-$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH) ?: '/';
+$path   = $uri_path;
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
 // -----------------------------------------------------------------------------
 // Helpers
 // -----------------------------------------------------------------------------
-function serve_file($path) {
-    if (!is_file($path)) return false;
-    $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+function serve_file($abs) {
+    if (!is_file($abs)) return false;
+    $ext = strtolower(pathinfo($abs, PATHINFO_EXTENSION));
     $mimes = [
         'html' => 'text/html; charset=UTF-8',
         'htm'  => 'text/html; charset=UTF-8',
@@ -50,7 +60,7 @@ function serve_file($path) {
         'pdf'  => 'application/pdf',
     ];
     if (isset($mimes[$ext])) header('Content-Type: ' . $mimes[$ext]);
-    readfile($path);
+    readfile($abs);
     return true;
 }
 
@@ -59,25 +69,32 @@ function redirect($to, $code = 301) {
     exit;
 }
 
+function dbg($tag) {
+    header('X-Router-Decision: ' . $tag);
+}
+
 // -----------------------------------------------------------------------------
-// Handle shared assets + contact.php routing
+// Special routes
 // -----------------------------------------------------------------------------
-// Contact form POSTs — route to the per-site contact.php
-if (($path === '/contact.php' || $path === '/kontakt.php') && is_file("{$site}/contact.php")) {
-    chdir(__DIR__ . '/' . $site);
-    require __DIR__ . "/{$site}/contact.php";
+// Contact form — route to the per-site contact.php
+if (($path === '/contact.php' || $path === '/kontakt.php') && is_file("$ROOT/$site/contact.php")) {
+    dbg("contact:$site");
+    chdir("$ROOT/$site");
+    require "$ROOT/$site/contact.php";
     exit;
 }
 
 // sitemap.xml at root → per-site
-if ($path === '/sitemap.xml' && is_file("{$site}/sitemap.xml")) {
-    if (serve_file("{$site}/sitemap.xml")) exit;
+if ($path === '/sitemap.xml' && is_file("$ROOT/$site/sitemap.xml")) {
+    dbg("sitemap:$site");
+    serve_file("$ROOT/$site/sitemap.xml");
+    exit;
 }
 
 // robots.txt at root (shared)
 if ($path === '/robots.txt') {
-    if (is_file(__DIR__ . '/robots.txt') && serve_file(__DIR__ . '/robots.txt')) exit;
-    // Fallback
+    if (is_file("$ROOT/robots.txt")) { dbg('robots'); serve_file("$ROOT/robots.txt"); exit; }
+    dbg('robots-fallback');
     header('Content-Type: text/plain');
     echo "User-agent: *\nAllow: /\n";
     exit;
@@ -87,7 +104,8 @@ if ($path === '/robots.txt') {
 // Root
 // -----------------------------------------------------------------------------
 if ($path === '/' || $path === '') {
-    if (serve_file("{$site}/index.html")) exit;
+    dbg("root:$site");
+    if (serve_file("$ROOT/$site/index.html")) exit;
     http_response_code(404);
     exit;
 }
@@ -99,10 +117,12 @@ if (preg_match('#^/(com|de|nl)(/.*)?$#', $path, $m)) {
     $sub = $m[1];
     $rest = $m[2] ?? '';
     if ($rest === '' || $rest === '/') {
-        if (serve_file("{$sub}/index.html")) exit;
+        dbg("prefix-root:$sub");
+        if (serve_file("$ROOT/$sub/index.html")) exit;
     }
-    $candidate = $sub . $rest;
+    $candidate = "$ROOT/$sub$rest";
     if (is_file($candidate)) {
+        dbg("prefix-direct:$sub$rest");
         serve_file($candidate);
         exit;
     }
@@ -112,39 +132,31 @@ if (preg_match('#^/(com|de|nl)(/.*)?$#', $path, $m)) {
 }
 
 // -----------------------------------------------------------------------------
-// Shared assets — serve from repo root (matches href="../shared/...")
-// -----------------------------------------------------------------------------
-if (strpos($path, '/shared/') === 0) {
-    $f = ltrim($path, '/');
-    if (is_file($f)) {
-        serve_file($f);
-        exit;
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Canonical enforcement: /foo.html → /foo/  (301)
 // -----------------------------------------------------------------------------
 if (preg_match('#^/([^/]+)\.html$#', $path, $m)) {
     $slug = $m[1];
-    if (is_file("{$site}/{$slug}.html") && $slug !== 'index') {
-        // Don't redirect if the request already came from the pretty URL internally
+    if (is_file("$ROOT/$site/{$slug}.html") && $slug !== 'index') {
+        dbg('canonical-301');
         redirect("/{$slug}/");
     }
 }
 
 // -----------------------------------------------------------------------------
-// Taxonomy + legacy WP paths → 301 to blog index
+// Taxonomy + legacy WP paths → 301 to blog index (or 410)
 // -----------------------------------------------------------------------------
 if (preg_match('#^/(category|tag|author|kategorie|autor)/#', $path)) {
     $blog = ($site === 'de') ? '/blog/msc-headhunting-blog/' : '/blog/';
+    dbg('tax-301');
     redirect($blog);
 }
 if (preg_match('#^/wp-(content|admin|includes|json)/#', $path)) {
+    dbg('wp-410');
     http_response_code(410);
     exit;
 }
 if ($path === '/feed/' || $path === '/feed') {
+    dbg('feed-301');
     redirect(($site === 'de') ? '/blog/msc-headhunting-blog/' : '/blog/');
 }
 
@@ -154,53 +166,56 @@ if ($path === '/feed/' || $path === '/feed') {
 $trimmed = rtrim($path, '/');
 $segments = array_values(array_filter(explode('/', $trimmed), 'strlen'));
 
-// 1. Exact file: /com/foo.html style path
-if (is_file("{$site}{$path}") && substr($path, -1) !== '/') {
-    serve_file("{$site}{$path}");
+// 1. Exact file at /site/path
+if (substr($path, -1) !== '/' && is_file("$ROOT/$site$path")) {
+    dbg('exact');
+    serve_file("$ROOT/$site$path");
     exit;
 }
 
 // 2. /foo/ → {site}/foo.html
 if (count($segments) === 1) {
-    $f = "{$site}/{$segments[0]}.html";
-    if (is_file($f)) { serve_file($f); exit; }
+    $f = "$ROOT/$site/{$segments[0]}.html";
+    if (is_file($f)) { dbg('1seg'); serve_file($f); exit; }
 }
 
-// 3. /foo/bar/ → {site}/foo/bar.html (subdir file, e.g. testimonials/, case-studies/)
+// 3. /foo/bar/ → {site}/foo/bar.html
 if (count($segments) === 2) {
-    $f = "{$site}/{$segments[0]}/{$segments[1]}.html";
-    if (is_file($f)) { serve_file($f); exit; }
+    $f = "$ROOT/$site/{$segments[0]}/{$segments[1]}.html";
+    if (is_file($f)) { dbg('2seg-subdir'); serve_file($f); exit; }
 
-    // Flat-prefix files (DE testimonials + case studies migrated as prefix-slug.html)
+    // Flat-prefix files (migrated testimonials + case studies)
     $prefixes = [
         'testimonials'       => 'testimonial',
         'unsere-referenzen'  => 'testimonial',
         'case-studies'       => 'case-study',
     ];
     if (isset($prefixes[$segments[0]])) {
-        $flat = "{$site}/{$prefixes[$segments[0]]}-{$segments[1]}.html";
-        if (is_file($flat)) { serve_file($flat); exit; }
+        $flat = "$ROOT/$site/{$prefixes[$segments[0]]}-{$segments[1]}.html";
+        if (is_file($flat)) { dbg('2seg-flat'); serve_file($flat); exit; }
     }
 
-    // Sector pattern: /industries-and-sectors/foo/ → {site}/foo.html (root-level)
-    $sector_root = "{$site}/{$segments[1]}.html";
-    if (is_file($sector_root)) { serve_file($sector_root); exit; }
+    // Sector pattern: last seg at root
+    $sector_root = "$ROOT/$site/{$segments[1]}.html";
+    if (is_file($sector_root)) { dbg('2seg-sector'); serve_file($sector_root); exit; }
 
-    // WP attachment pattern: /parent/child/ where parent itself is a real page
-    if (is_file("{$site}/{$segments[0]}.html")) {
+    // WP attachment pattern: /parent/child/ → /parent/
+    if (is_file("$ROOT/$site/{$segments[0]}.html")) {
+        dbg('2seg-attach');
         redirect("/{$segments[0]}/");
     }
 }
 
-// 4. Deeper paths — try last segment at root
+// 4. Deeper paths
 if (count($segments) >= 3) {
     $last = end($segments);
-    if (is_file("{$site}/{$last}.html")) {
-        serve_file("{$site}/{$last}.html");
+    if (is_file("$ROOT/$site/{$last}.html")) {
+        dbg('deep-last');
+        serve_file("$ROOT/$site/{$last}.html");
         exit;
     }
-    // Attachment: redirect to first segment as parent
-    if (is_file("{$site}/{$segments[0]}.html")) {
+    if (is_file("$ROOT/$site/{$segments[0]}.html")) {
+        dbg('deep-attach');
         redirect("/{$segments[0]}/");
     }
 }
@@ -208,8 +223,9 @@ if (count($segments) >= 3) {
 // -----------------------------------------------------------------------------
 // 404
 // -----------------------------------------------------------------------------
+dbg('404');
 http_response_code(404);
-$site_404 = "{$site}/404.html";
+$site_404 = "$ROOT/$site/404.html";
 if (is_file($site_404)) {
     serve_file($site_404);
     exit;
