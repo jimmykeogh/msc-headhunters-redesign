@@ -40,7 +40,6 @@ RewriteRule ^sectors/marketing\.html$ marketing-headhunters.html [L]
 RewriteRule ^sectors/sectors\.html$ sectors.html [L]
 RewriteRule ^sectors/finance\.html$ finance-headhunters.html [L]
 RewriteRule ^sectors/medical\.html$ healthcare-headhunters.html [L]
-RewriteRule ^privacy_policy\.html$ privacy.html [L]
 RewriteRule ^sectors/retail\.html$ retail-headhunters.html [L]
 RewriteRule ^sectors/media\.html$ media-headhunters.html [L]
 
