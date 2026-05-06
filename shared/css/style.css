@@ -1288,12 +1288,13 @@ p + p { margin-top: 1.2em; }
   font-weight: 500;
 }
 .hero-title {
-  font-size: var(--text-display);
-  line-height: 0.95;
-  letter-spacing: -0.04em;
+  font-size: clamp(1.875rem, 4vw, 3.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   color: var(--white);
   margin-bottom: 1.5rem;
-  max-width: 22ch;
+  max-width: 28ch;
+  font-weight: 500;
 }
 .hero-title em { font-style: italic; color: var(--accent, #c9a96e); }
 .hero-text {
@@ -1316,6 +1317,6 @@ p + p { margin-top: 1.2em; }
   align-items: center;
 }
 @media (max-width: 768px) {
-  .hero-title { font-size: clamp(2.25rem, 11vw, 4rem); }
+  .hero-title { font-size: clamp(1.625rem, 6.5vw, 2.5rem); max-width: 100%; }
   .hero-content { padding-top: 9rem; padding-bottom: 3rem; padding-left: 1.5rem; padding-right: 1.5rem; }
 }
