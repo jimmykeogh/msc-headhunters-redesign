@@ -3,7 +3,7 @@
 
 // --- Per-domain config ---------------------------------------------
 $TO_EMAIL   = 'zubia@msc-headhunters.com, michaela@msc-headhunters.com, axel@msc-headhunters.com';
-$FROM_EMAIL = 'noreply@msc-headhunters.com';
+$FROM_EMAIL = 'info@msc-headhunters.com';
 $SUCCESS_URL = '/thank-you/';
 $ERROR_MESSAGE = 'Sorry, something went wrong. Please email us directly at zubia@msc-headhunters.com';
 // -------------------------------------------------------------------
