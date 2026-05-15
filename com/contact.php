@@ -2,10 +2,10 @@
 // MSC Headhunting .com – Contact Form Handler (PHP 8.2)
 
 // --- Per-domain config ---------------------------------------------
-$TO_EMAIL   = 'info@msc-headhunters.com';
+$TO_EMAIL   = 'zubia@msc-headhunters.com, michaela@msc-headhunters.com, axel@msc-headhunters.com';
 $FROM_EMAIL = 'noreply@msc-headhunters.com';
 $SUCCESS_URL = '/thank-you/';
-$ERROR_MESSAGE = 'Sorry, something went wrong. Please email us directly at info@msc-headhunters.com';
+$ERROR_MESSAGE = 'Sorry, something went wrong. Please email us directly at zubia@msc-headhunters.com';
 // -------------------------------------------------------------------
 
 header('Content-Type: text/html; charset=UTF-8');
