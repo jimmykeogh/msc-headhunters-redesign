@@ -1,6 +1,11 @@
 RewriteEngine On
 
 # ============================================================
+# Legacy WordPress sitemap URLs → new sitemap (preserve any backlinks)
+# ============================================================
+RewriteRule ^(post|category|tag|author|post_tag)-sitemap[0-9]*\.xml$ /sitemap.xml [R=301,L]
+
+# ============================================================
 # URL PRESERVATION: serve new .html files at original URLs
 # Google's index points at these URLs — do not change them.
 # ============================================================

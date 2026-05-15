@@ -158,6 +158,10 @@ if (preg_match('#^/([^/]+)\.html$#', $path, $m)) {
 // -----------------------------------------------------------------------------
 // Taxonomy + legacy WP paths → 301 to blog index (or 410)
 // -----------------------------------------------------------------------------
+if (preg_match('#^/(post|category|tag|author|post_tag)-sitemap[0-9]*\.xml$#', $path)) {
+    dbg('wp-sitemap-301');
+    redirect('/sitemap.xml');
+}
 if (preg_match('#^/(category|tag|author|kategorie|autor)/#', $path)) {
     $blog = ($site === 'de') ? '/blog/msc-headhunting-blog/' : '/blog/';
     dbg('tax-301');
@@ -249,6 +253,22 @@ if (count($segments) >= 3) {
     if (is_file("$ROOT/$site/{$segments[0]}.html")) {
         dbg('deep-attach');
         redirect("/{$segments[0]}/");
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Legacy blog catch-all: unmapped single-segment URLs → blog index
+// Mirrors .htaccess catch-all so preview matches production for any old WP
+// post URL that wasn't explicitly migrated.
+// -----------------------------------------------------------------------------
+if (count($segments) === 1 && preg_match('#^[a-z0-9-]+$#', $segments[0])) {
+    $excluded_com = ['case-studies','testimonials','industries-and-sectors','images','shared','wp-content','blog'];
+    $excluded_de  = ['case-studies','fallstudien','klienten-referenzen','industrie-sektoren','industries-and-sectors','images','shared','wp-content','blog'];
+    $excluded = ($site === 'de') ? $excluded_de : $excluded_com;
+    if (!in_array($segments[0], $excluded, true)) {
+        $blog = ($site === 'de') ? '/blog/msc-headhunting-blog/' : '/blog/';
+        dbg('legacy-blog-catchall');
+        redirect($blog);
     }
 }
 

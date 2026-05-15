@@ -1,6 +1,11 @@
 RewriteEngine On
 
 # ============================================================
+# Legacy WordPress sitemap URLs → new sitemap (preserve any backlinks)
+# ============================================================
+RewriteRule ^(post|category|tag|author|post_tag)-sitemap[0-9]*\.xml$ /sitemap.xml [R=301,L]
+
+# ============================================================
 # URL PRESERVATION: serve new .html files at original URLs
 # Google's index points at these URLs — do not change them.
 # ============================================================
@@ -2410,3 +2415,12 @@ RewriteRule ^category/.+$ /blog/msc-headhunting-blog/ [R=301,L]
 RewriteRule ^tag/.+$ /blog/msc-headhunting-blog/ [R=301,L]
 RewriteRule ^autor/.+$ /ueber-msc-headhunters/ [R=301,L]
 RewriteRule ^author/.+$ /ueber-msc-headhunters/ [R=301,L]
+
+# Final catch-all: unmapped single-segment URLs → blog index
+# Preserves any legacy WP post that wasn't migrated (e.g. /workaholics-table/).
+# Only fires when no real file/dir matches and URL isn't inside a known section.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !^/(case-studies|fallstudien|klienten-referenzen|industrie-sektoren|industries-and-sectors|images|shared|wp-content|blog)/ [NC]
+RewriteCond %{REQUEST_URI} ^/[a-z0-9-]+/?$ [NC]
+RewriteRule ^ /blog/msc-headhunting-blog/ [R=301,L]
