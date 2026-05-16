@@ -6,6 +6,14 @@ RewriteEngine On
 RewriteRule ^(post|category|tag|author|post_tag)-sitemap[0-9]*\.xml$ /sitemap.xml [R=301,L]
 
 # ============================================================
+# Targeted 301 for an indexed URL with no direct equivalent.
+# /european-headhunters/ was indexed by Google but isn't a separate
+# page in the new structure; send it to the topically-closest article
+# so we preserve the ranking signal instead of falling to /blog/.
+# ============================================================
+RewriteRule ^european-headhunters/?$ /european-headhunters-offer-a-comprehensive-solution-to-recruitment/ [R=301,L]
+
+# ============================================================
 # URL PRESERVATION: serve new .html files at original URLs
 # Google's index points at these URLs — do not change them.
 # ============================================================

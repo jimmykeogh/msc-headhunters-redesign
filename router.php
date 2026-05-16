@@ -257,6 +257,12 @@ if (count($segments) >= 3) {
 }
 
 // -----------------------------------------------------------------------------
+// Targeted 301 for /european-headhunters/ → topical equivalent (mirrors .htaccess)
+if ($site === 'com' && preg_match('#^/european-headhunters/?$#', $path)) {
+    dbg('european-headhunters-301');
+    redirect('/european-headhunters-offer-a-comprehensive-solution-to-recruitment/');
+}
+
 // Legacy blog catch-all: unmapped single-segment URLs → blog index
 // Mirrors .htaccess catch-all so preview matches production for any old WP
 // post URL that wasn't explicitly migrated.
