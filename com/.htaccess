@@ -3,7 +3,8 @@ RewriteEngine On
 # ============================================================
 # Legacy WordPress sitemap URLs → new sitemap (preserve any backlinks)
 # ============================================================
-RewriteRule ^(post|category|tag|author|post_tag)-sitemap[0-9]*\.xml$ /sitemap.xml [R=301,L]
+RewriteRule ^(post|page|category|tag|author|post_tag|testimonials)-sitemap[0-9]*\.xml$ /sitemap.xml [R=301,L]
+RewriteRule ^sitemap_index\.xml$ /sitemap.xml [R=301,L]
 
 # ============================================================
 # Targeted 301 for an indexed URL with no direct equivalent.
