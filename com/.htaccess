@@ -1,10 +1,12 @@
 RewriteEngine On
 
-# ============================================================
-# Legacy WordPress sitemap URLs → new sitemap (preserve any backlinks)
-# ============================================================
-RewriteRule ^(post|page|category|tag|author|post_tag|testimonials)-sitemap[0-9]*\.xml$ /sitemap.xml [R=301,L]
-RewriteRule ^sitemap_index\.xml$ /sitemap.xml [R=301,L]
+# /sitemap.xml → /sitemap_index.xml (matches live behaviour on .com)
+RewriteRule ^sitemap\.xml$ /sitemap_index.xml [R=301,L]
+
+# Note: Yoast-format sitemaps are kept as static .xml files on disk
+# (sitemap_index.xml, post-sitemap.xml, page-sitemap.xml, etc.) so that
+# Google sees the exact same sitemap URLs it has always crawled. No
+# 301s here — Apache serves the .xml files directly.
 
 # ============================================================
 # Targeted 301 for an indexed URL with no direct equivalent.
